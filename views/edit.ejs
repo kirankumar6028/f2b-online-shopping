@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <!-- Bootstrap core CSS -->
+    <link href="/docs/4.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+   <!-- Favicons -->
+<!--<link rel="apple-touch-icon" href="/docs/4.5/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
+<link rel="icon" href="/docs/4.5/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="/docs/4.5/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
+<link rel="manifest" href="/docs/4.5/assets/img/favicons/manifest.json">
+<link rel="mask-icon" href="/docs/4.5/assets/img/favicons/safari-pinned-tab.svg" color="#563d7c">
+<link rel="icon" href="/docs/4.5/assets/img/favicons/favicon.ico">
+<meta name="msapplication-config" content="/docs/4.5/assets/img/favicons/browserconfig.xml">
+<meta name="theme-color" content="#563d7c">!-->
+
+
+   <style>
+     .bd-placeholder-img {
+       font-size: 1.125rem;
+       text-anchor: middle;
+       -webkit-user-select: none;
+       -moz-user-select: none;
+       -ms-user-select: none;
+       user-select: none;
+     }
+
+     @media (min-width: 768px) {
+       .bd-placeholder-img-lg {
+         font-size: 3.5rem;
+       }
+     }
+   </style>
+   <!-- Custom styles for this template -->
+   <link href="css/edit.css" rel="stylesheet">
+    <title>Add New Item</title>
+
+
+
+
+  </head>
+    <body class="text-center">
+      <div class="container">
+        <h1 class="h3 mb-3 font-weight-normal">New Product</h1>
+          <div class="row">
+            <div class="col">
+              <form class="form-signin" action="#" method="POST">
+                    <!--<img class="mb-4" src="/docs/4.5/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">!-->
+
+                    <label for="text" class="">Product Name:</label>
+                    <input type="text" id="name" class="form-control" placeholder="Product Name" required>
+                    <label for="text" class="">Type:</label>
+                    <!--<input type="text" id="type" class="form-control" placeholder="Type" required>!-->
+                    <select class="custom-select form-control"  id="type" required>
+                        <option>Vegetables</option>
+                        <option>Herbs</option>
+                        <option>Fruits</option>
+                        <option>Seasonal</option>
+                    </select>
+                    <label for="text" class="">Unit:</label>
+                    <!--<input type="text" id="unit" class="form-control" placeholder="Unit" required>!-->
+                    <select class="custom-select form-control" id="unit">
+                      <option>kg</option>
+                      <option>dz</option>
+                    </select>
+                    <label for="text" class="">No of Items Available:</label>
+                    <input type="tel" id="noOfItemAvailable" class="form-control"placeholder="No of Items Available" required>
+                    <label for="text" class="">Price:</label>
+                    <input type="tel" id="price" class="form-control" placeholder="Price" required>
+                    <label for="text" class="">Is Item Available:</label>
+                    <select class="custom-select form-control" id="isItemAvailable" required>
+                        <option>true</option>
+                        <option>false</option>
+                    </select>
+                    <br>
+
+
+               </form>
+             </div>
+
+            <div class="col">
+              <canvas id="myCanvas" width="530" height="245" style="border:1px solid black; margin-top:40px;">
+                <img src="" alt="" id="image">
+              </canvas>
+              <label for="">Add image:</label>
+              <input class="form-control" type="file" onchange="previewImage(this);" id="image" style="height:45px;" >
+              <br>
+              <label for="text" class="" id="" style="height:30px;">About Product:</label>
+              <textarea  class="form-control" name="text" rows="2" cols="36" placeholder="About Product"></textarea>
+              <br>
+
+            </div>
+          </div>
+
+              <button  style="width:100px;"class="btn  btn-primary btn-block" id="btn" type="button" onclick="pushData()">Add Item</button>
+
+        </div>
+
+
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+   <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-app.js"></script>
+
+   <!-- TODO: Add SDKs for Firebase products that you want to use
+   https://firebase.google.com/docs/web/setup#available-libraries -->
+   <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-analytics.js"></script>
+
+   <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-firestore.js"></script>
+
+<script>
+ // Your web app's Firebase configuration
+ var firebaseConfig = {
+   apiKey: "AIzaSyDZE3W_s78o0kSnVEKc-E4_NmG2qHYBC_8",
+   authDomain: "f-2-b-4731b.firebaseapp.com",
+   databaseURL: "https://f-2-b-4731b.firebaseio.com",
+   projectId: "f-2-b-4731b",
+   storageBucket: "f-2-b-4731b.appspot.com",
+   messagingSenderId: "136118267167",
+   appId: "1:136118267167:web:b52c04db39a9f0260c942a",
+   measurementId: "G-M40EJH4SLH"
+ };
+ // Initialize Firebase
+ firebase.initializeApp(firebaseConfig);
+ firebase.analytics();
+
+ var ref = firebase.firestore();
+
+ // var button = document.getElementById("btn");
+ // button.addEventListener("click", function (){
+ //   console.log("in Call Back");
+ //   pushData();
+ // });
+
+ function pushData(){
+
+   console.log("In pushData");
+
+   var data = {
+       name : document.getElementById("name").value,
+       type :  document.getElementById("type").value,
+       unit : document.getElementById("unit").value,
+       noOfItemAvailable : document.getElementById("noOfItemAvailable").value,
+       price :  document.getElementById("price").value,
+       isItemAvailable : document.getElementById("isItemAvailable").value,
+   }
+
+   ref.collection("Products").doc(data.name)
+       .set(data)
+       .then(function (doc){
+           //console.log("Hyy the Data Added Sucessfully.......\n" +
+           //"With a Document id :" + doc.id);
+           console.log("Success.....");
+           alert("The data added successfully..");
+           location.reload();
+       })
+       .catch(function(error){
+           console.log("Hyy something went wrong " + error);
+       });
+
+}
+
+
+</script>
+<script>
+    var canvas = document.getElementById("canvas");
+    var context = canvas.getContext("2d");
+
+    function previewImage(input){
+      var reader = new FileReader();
+      reader.onload = function(e){
+        document.getElementById("image").setAttribute("src", e.target.result);
+      }
+
+      reader.readAsDataURL(input.files[0])
+      var image = document.getElementById("image");
+      context.drawImage(image);
+    }
+
+</script>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+  </body>
+</html>
