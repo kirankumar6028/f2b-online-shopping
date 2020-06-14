@@ -42,7 +42,9 @@ body {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
-.btn{
-  margin-left: 1100px;
-  padding-top: 10px;
+
+}
+#uploader{
+    -webkit-appearance:none;
+    appearance:none;
 }

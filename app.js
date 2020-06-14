@@ -51,6 +51,14 @@ app.post("/edit", function(req, res){
   res.redirect("/edit");
 });
 
+app.get("/fruits", function(req, res){
+  res.render("fruits", {});
+});
+
+app.post("/fruits", function(req, res){
+  res.redirect("/fruits");
+});
+
 
 
 app.listen(process.env.PORT || 3000, function(){

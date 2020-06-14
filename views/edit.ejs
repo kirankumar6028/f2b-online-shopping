@@ -69,6 +69,7 @@
                     <select class="custom-select form-control" id="unit">
                       <option>kg</option>
                       <option>dz</option>
+                      <option>peice</option>
                     </select>
                     <label for="text" class="">No of Items Available:</label>
                     <input type="tel" id="noOfItemAvailable" class="form-control"placeholder="No of Items Available" required>
@@ -90,16 +91,16 @@
                 <img src="" alt="" id="image">
               </canvas>
               <label for="">Add image:</label>
-              <input class="form-control" type="file" onchange="previewImage(this);" id="image" style="height:45px;" >
+              <input class="form-control" type="file" id="uploadButton" style="height:45px;" >
               <br>
               <label for="text" class="" id="" style="height:30px;">About Product:</label>
-              <textarea  class="form-control" name="text" rows="2" cols="36" placeholder="About Product"></textarea>
+              <textarea id="detailedDescription"  class="form-control" name="text" rows="2" cols="36" placeholder="About Product"></textarea>
               <br>
 
             </div>
           </div>
 
-              <button  style="width:100px;"class="btn  btn-primary btn-block" id="btn" type="button" onclick="pushData()">Add Item</button>
+              <button  style="width:100px;"class="btn  btn-primary btn-block float-right" id="btn" type="button" onclick="pushData()">Add Item</button>
 
         </div>
 
@@ -112,6 +113,8 @@
    <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-analytics.js"></script>
 
    <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-firestore.js"></script>
+   <!--storage!-->
+   <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-storage.js"></script>
 
 <script>
  // Your web app's Firebase configuration
@@ -130,6 +133,8 @@
  firebase.analytics();
 
  var ref = firebase.firestore();
+ var url;
+
 
  // var button = document.getElementById("btn");
  // button.addEventListener("click", function (){
@@ -148,6 +153,8 @@
        noOfItemAvailable : document.getElementById("noOfItemAvailable").value,
        price :  document.getElementById("price").value,
        isItemAvailable : document.getElementById("isItemAvailable").value,
+       imageUri : url ,
+       detailedDescription : document.getElementById("detailedDescription").value,
    }
 
    ref.collection("Products").doc(data.name)
@@ -165,9 +172,47 @@
 
 }
 
+uploadButton = document.getElementById("uploadButton");
+
+
+uploadButton.addEventListener('change', function(e){
+
+  var file = e.target.files[0];
+
+  var storageRef = firebase.storage().ref('Products/' + file.name)
+  var uploadTask = storageRef.put(file);
+
+  uploadTask.on('state_changed', function(snapshot){
+        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload is ' + progress + '% done');
+          }, function(error) {
+          }, function() {
+              uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                url = downloadURL;
+              console.log('File available at', downloadURL);
+          });
+      });
+    });
 
 </script>
 <script>
+        const result1 = document.querySelector("#result");
+
+          let citiesRef = ref.collection("Products");
+          let allCities = citiesRef.get()
+          .then(snapshot => {
+          snapshot.forEach(doc => {
+          console.log(doc.id, '=>', doc.data());
+
+        //  result1.innerHTML += "<div class="list-item"> <h3>" + doc.data().name +  "</h3></div>"
+          });
+          })
+          .catch(err => {
+          console.log('Error getting documents', err);
+          });
+
+</script>
+<!--<script>
     var canvas = document.getElementById("canvas");
     var context = canvas.getContext("2d");
 
@@ -182,7 +227,7 @@
       context.drawImage(image);
     }
 
-</script>
+</script>!-->
 
 
 
