@@ -205,6 +205,7 @@ uploadButton.addEventListener('change', function(e){
           console.log(doc.id, '=>', doc.data());
 
         //  result1.innerHTML += "<div class="list-item"> <h3>" + doc.data().name +  "</h3></div>"
+            result1.innerHTML += <%= key : doc.data().name %>;
           });
           })
           .catch(err => {

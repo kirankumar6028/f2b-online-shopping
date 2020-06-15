@@ -11,6 +11,8 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extebded: true}));
 app.use(express.static("public"));
 
+let name;
+
 app.get("/", function(req,res){
   res.render("index", {});
 });
@@ -36,7 +38,7 @@ app.post("/customer", function(){
 });
 
 app.get("/products", function(req, res){
-  res.render("products", {});
+  res.render("products", { key : name });
 });
 
 app.post("/products", function(req, res){
@@ -57,6 +59,30 @@ app.get("/fruits", function(req, res){
 
 app.post("/fruits", function(req, res){
   res.redirect("/fruits");
+});
+
+app.get("/vegetables", function(req, res){
+  res.render("vegetables", {});
+});
+
+app.post("/vegetables", function(req, res){
+  res.redirect("/vegetables");
+});
+
+app.get("/herbs", function(req, res){
+  res.render("herbs", {});
+});
+
+app.post("/herbs", function(req, res){
+  res.redirect("/herbs");
+});
+
+app.get("/seasonals", function(req, res){
+  res.render("seasonals", {});
+});
+
+app.post("/seasonals", function(req, res){
+  res.redirect("/seasonals");
 });
 
 
