@@ -11,8 +11,6 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extebded: true}));
 app.use(express.static("public"));
 
-let name;
-
 app.get("/", function(req,res){
   res.render("index", {});
 });
@@ -38,7 +36,7 @@ app.post("/customer", function(){
 });
 
 app.get("/products", function(req, res){
-  res.render("products", { key : name });
+  res.render("products", { });
 });
 
 app.post("/products", function(req, res){
