@@ -4,6 +4,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const firebase = require("firebase");
+const request = require("request");
 
 const app = express();
 
@@ -14,6 +15,8 @@ app.use(express.static("public"));
 app.get("/", function(req,res){
   res.render("index", {});
 });
+
+
 
 app.get("/admin", function(req, res){
   res.render("admin", {});
@@ -59,29 +62,13 @@ app.post("/fruits", function(req, res){
   res.redirect("/fruits");
 });
 
-app.get("/vegetables", function(req, res){
-  res.render("vegetables", {});
+app.get("/user", function(req, res){
+  res.render("user", {});
 });
 
-app.post("/vegetables", function(req, res){
-  res.redirect("/vegetables");
-});
-
-app.get("/herbs", function(req, res){
-  res.render("herbs", {});
-});
-
-app.post("/herbs", function(req, res){
-  res.redirect("/herbs");
-});
-
-app.get("/seasonals", function(req, res){
-  res.render("seasonals", {});
-});
-
-app.post("/seasonals", function(req, res){
-  res.redirect("/seasonals");
-});
+app.post("/user", function(req, res){
+  res.redirect("/user");
+})
 
 
 

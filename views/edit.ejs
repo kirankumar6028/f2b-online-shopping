@@ -37,6 +37,24 @@
          font-size: 3.5rem;
        }
      }
+
+     .image-preview{
+       height:265px;
+       width:425px;
+
+
+
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       font-weight: bold;
+       color: #cccccc;
+     }
+
+     .image-preview__image{
+       display: none;
+       width: 100%;
+     }
    </style>
    <!-- Custom styles for this template -->
    <link href="css/edit.css" rel="stylesheet">
@@ -48,9 +66,9 @@
   </head>
     <body class="text-center">
       <div class="container">
-        <h1 class="h3 mb-3 font-weight-normal">New Product</h1>
+        <h1 class="h3 mb-3 font-weight-normal"><strong>New Product</strong></h1>
           <div class="row">
-            <div class="col">
+            <div class="col-lg-6">
               <form class="form-signin" action="#" method="POST">
                     <!--<img class="mb-4" src="/docs/4.5/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">!-->
 
@@ -86,12 +104,14 @@
                </form>
              </div>
 
-            <div class="col">
-              <canvas id="myCanvas" width="530" height="245" style="border:1px solid black; margin-top:40px;">
-                <img src="" alt="" id="image">
-              </canvas>
+            <div class="col-lg-6">
+              <div class="image-preview" id="image-preview">
+                  <img src="" alt="Image Preview" class="image-preview__image" style="height:250px; width:425px; margin-top:20px;">
+                  <span class="image-preview__default-text">Image Preview</span>
+              </div>
+
               <label for="">Add image:</label>
-              <input class="form-control" type="file" id="uploadButton" style="height:45px;" >
+              <input class="form-control" type="file" id="uploadButton" style="height:45px;" required>
               <br>
               <label for="text" class="" id="" style="height:30px;">About Product:</label>
               <textarea id="detailedDescription"  class="form-control" name="text" rows="2" cols="36" placeholder="About Product"></textarea>
@@ -195,16 +215,19 @@ uploadButton.addEventListener('change', function(e){
     });
 
 </script>
+<!-- Retrieve Data from firebase !-->
 <script>
-        const result1 = document.querySelector("#result");
+        const result = document.querySelector("#result");
 
           let citiesRef = ref.collection("Products");
           let allCities = citiesRef.get()
           .then(snapshot => {
           snapshot.forEach(doc => {
-          console.log(doc.id, '=>', doc.data());
+            var data = doc.data();
+            console.log("price->" + data.imageUri);
+        //  console.log(JSON.stringify(doc.id, '=>', doc.data().type));
 
-        //  result1.innerHTML += "<div class="list-item"> <h3>" + doc.data().name +  "</h3></div>"
+          //JSON.parse();
           });
           })
           .catch(err => {
@@ -212,22 +235,35 @@ uploadButton.addEventListener('change', function(e){
           });
 
 </script>
-<!--<script>
-    var canvas = document.getElementById("canvas");
-    var context = canvas.getContext("2d");
+<!-- preview image !-->
+<script>
+    const uploadButton = document.getElementById("uploadButton");
+    const previewContainer = document.getElementById("image-preview");
+    const previewImage = previewContainer.querySelector(".image-preview__image");
+    const previewDefaultText = previewContainer.querySelector(".image-preview__default-text");
 
-    function previewImage(input){
-      var reader = new FileReader();
-      reader.onload = function(e){
-        document.getElementById("image").setAttribute("src", e.target.result);
-      }
+    uploadButton.addEventListener("change", function(){
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
 
-      reader.readAsDataURL(input.files[0])
-      var image = document.getElementById("image");
-      context.drawImage(image);
-    }
+        previewDefaultText.style.display = "none";
+        previewImage.style.display = "block";
 
-</script>!-->
+        reader.addEventListener("load", function(){
+          previewImage.setAttribute("src", this.result);
+      });
+      reader.readAsDataURL(file);
+
+    }else {
+      previewDefaultText.style.display = null;
+      previewImage.style.display = null;
+      previewImage.setAttribute("src", "");
+  }
+
+  });
+
+</script>
 
 
 

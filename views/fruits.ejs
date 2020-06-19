@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
     <!-- Favicons -->
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <!--<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
 <link rel="apple-touch-icon" href="/docs/4.5/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
 <link rel="icon" href="/docs/4.5/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
@@ -25,7 +25,7 @@
 <link rel="mask-icon" href="/docs/4.5/assets/img/favicons/safari-pinned-tab.svg" color="#563d7c">
 <link rel="icon" href="/docs/4.5/assets/img/favicons/favicon.ico">
 <meta name="msapplication-config" content="/docs/4.5/assets/img/favicons/browserconfig.xml">
-<meta name="theme-color" content="#563d7c">
+<meta name="theme-color" content="#563d7c">!-->
 
 
     <style>
@@ -59,13 +59,13 @@
           </a>
 
           <div class="card-body">
-            <h3>Fruits</h3>
+            <h3 id="name"></h3>
             <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
             <div class="d-flex justify-content-between align-items-center">
               <div class="">
 
                   <ul>
-                    <li><h4>Price :</h4></li>
+                    <li><h4 id="price">Price :</h4></li>
                     <li><h4>Type :</h4></li>
                     <li><h4>Unit :</h4></li>
                     <li><h4>Is item Available :</h4></li>
@@ -106,9 +106,63 @@
 
   </body>
 
+          <!-- The core Firebase JS SDK is always required and must be listed first -->
+     <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-app.js"></script>
+
+     <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+     <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-analytics.js"></script>
+
+     <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-firestore.js"></script>
+     <!--storage!-->
+     <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-storage.js"></script>
+
+
+
+     <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyDZE3W_s78o0kSnVEKc-E4_NmG2qHYBC_8",
+        authDomain: "f-2-b-4731b.firebaseapp.com",
+        databaseURL: "https://f-2-b-4731b.firebaseio.com",
+        projectId: "f-2-b-4731b",
+        storageBucket: "f-2-b-4731b.appspot.com",
+        messagingSenderId: "136118267167",
+        appId: "1:136118267167:web:b52c04db39a9f0260c942a",
+        measurementId: "G-M40EJH4SLH"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+
+      var ref = firebase.firestore();
+      var url;
+
+      const result = document.querySelector("#result");
+
+        let citiesRef = ref.collection("Products");
+        let allCities = citiesRef.get()
+        .then(snapshot => {
+        snapshot.forEach(doc => {
+          var data = doc.data();
+          console.log("price->" + data.imageUri);
+      //  console.log(JSON.stringify(doc.id, '=>', doc.data().type));
+       $("#name").append(data.name);
+       $("#price").append(data.price);
+
+        //JSON.parse();
+        });
+        })
+        .catch(err => {
+        console.log('Error getting documents', err);
+        });
+
+</script>
+
+
 
       <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-      <script>window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="/docs/4.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-1CmrxMRARb6aLqgBO7yyAxTOQE2AKb9GfXnEo760AUcUmFx3ibVJJAzGytlQcNXd" crossorigin="anonymous"></script></body>
+      <!--<script> document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="/docs/4.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-1CmrxMRARb6aLqgBO7yyAxTOQE2AKb9GfXnEo760AUcUmFx3ibVJJAzGytlQcNXd" crossorigin="anonymous"></script></body>!-->
 
       <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
       <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
