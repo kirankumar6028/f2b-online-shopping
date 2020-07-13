@@ -58,9 +58,11 @@ app.get("/fruits", function(req, res){
   res.render("fruits", {});
 });
 
-app.post("/fruits", function(req, res){
-  res.redirect("/fruits");
+
+app.get("/fruits/:", function(req, res){
+  res.render("fruits", {});
 });
+
 
 app.get("/user", function(req, res){
   res.render("user", {});
@@ -70,6 +72,11 @@ app.post("/user", function(req, res){
   res.redirect("/user");
 })
 
+
+app.get("/delivary", function(req, res){
+  
+  res.render("delivary", {});
+});
 
 
 app.listen(process.env.PORT || 3000, function(){
