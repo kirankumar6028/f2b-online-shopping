@@ -161,13 +161,14 @@
     db.collection("Products").get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         var data = doc.data();
+        var name = doc.data().name;
         //if(data.imageUri == "undefined"){
 
         console.log("name->" + data.name + "count->" + count);
             count++;
           div.innerHTML += '<div class="col-md-4">'+
                             '<div class="card mb-4 shadow-sm">' +
-                                '<a href="/fruits">' +
+                                '<a href="/fruits/'+ data.name +'">' +
                                 '<image src=' + data.imageUri + ' height="240" width="350"/>'+
                                 '</a>' +
 
