@@ -78,8 +78,8 @@
                       </form>
                     </div>
                     <div class="col">
-                      <form class="" action="/edit" method="POST">
-                        <button type="submit" class="btn btn-sm btn-primary" style="width:100px;" >Edit Product </button>
+                      <form class="" action="/update" method="POST">
+                        <button type="submit" class="btn btn-sm btn-primary float-right" style="width:100px;" >Edit Product </button>
                       </form>
                     </div>
                   </div>
@@ -154,7 +154,7 @@
           $("#unit").append(data.noOfItemAvailable);
           $("#available").append(data.isItemAvailable);
           $("#image").attr('src',data.imageUri);
-          console.log(name);
+          //console.log(name);
         });
         
       });

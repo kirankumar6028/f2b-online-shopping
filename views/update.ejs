@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <!-- Bootstrap core CSS -->
+    <link href="/docs/4.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+   <!-- Favicons -->
+<!--<link rel="apple-touch-icon" href="/docs/4.5/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
+<link rel="icon" href="/docs/4.5/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="/docs/4.5/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
+<link rel="manifest" href="/docs/4.5/assets/img/favicons/manifest.json">
+<link rel="mask-icon" href="/docs/4.5/assets/img/favicons/safari-pinned-tab.svg" color="#563d7c">
+<link rel="icon" href="/docs/4.5/assets/img/favicons/favicon.ico">
+<meta name="msapplication-config" content="/docs/4.5/assets/img/favicons/browserconfig.xml">
+<meta name="theme-color" content="#563d7c">!-->
+
+
+   <style>
+     .bd-placeholder-img {
+       font-size: 1.125rem;
+       text-anchor: middle;
+       -webkit-user-select: none;
+       -moz-user-select: none;
+       -ms-user-select: none;
+       user-select: none;
+     }
+
+     @media (min-width: 768px) {
+       .bd-placeholder-img-lg {
+         font-size: 3.5rem;
+       }
+     }
+
+     .image-preview{
+       height:265px;
+       width:425px;
+
+
+
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       font-weight: bold;
+       color: #cccccc;
+     }
+
+     .image-preview__image{
+       display: none;
+       width: 100%;
+     }
+   </style>
+   <!-- Custom styles for this template -->
+   <link href="css/update.css" rel="stylesheet">
+    <title>Update Existing Product</title>
+
+
+
+
+  </head>
+    <body class="text-center">
+      <div class="container">
+        <h1 class="h3 mb-3 font-weight-normal"><strong>Update Product</strong></h1>
+          <div class="row">
+            <div class="col-lg-6">
+              <form class="form-signin" action="#" method="POST">
+                    <!--<img class="mb-4" src="/docs/4.5/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">!-->
+
+                    <label for="text" class="">Product Name:</label>
+                    <input type="text" id="name" class="form-control" placeholder="Product Name" required>
+                    <label for="text" class="">Type:</label>
+                    <!--<input type="text" id="type" class="form-control" placeholder="Type" required>!-->
+                    <select class="custom-select form-control"  id="type" required>
+                        <option>Vegetables</option>
+                        <option>Herbs</option>
+                        <option>Fruits</option>
+                        <option>Seasonal</option>
+                    </select>
+                    <label for="text" class="">Unit:</label>
+                    <!--<input type="text" id="unit" class="form-control" placeholder="Unit" required>!-->
+                    <select class="custom-select form-control" id="unit">
+                      <option>kg</option>
+                      <option>dz</option>
+                      <option>peice</option>
+                    </select>
+                    <label for="text" class="">No of Items Available:</label>
+                    <input type="tel" id="noOfItemAvailable" class="form-control"placeholder="No of Items Available" required>
+                    <label for="text" class="">Price:</label>
+                    <input type="tel" id="price" class="form-control" placeholder="Price" required>
+                    <label for="text" class="">Is Item Available:</label>
+                    <select class="custom-select form-control" id="isItemAvailable" required>
+                        <option>true</option>
+                        <option>false</option>
+                    </select>
+                    <br>
+
+
+               </form>
+             </div>
+
+            <div class="col-lg-6">
+              <div class="image-preview" id="image-preview">
+                  <img src="" alt="Image Preview" class="image-preview__image" style="height:250px; width:425px; margin-top:20px;">
+                  <span class="image-preview__default-text">Image Preview</span>
+              </div>
+
+              <label for="">Add image:</label>
+              <input class="form-control" type="file" src="" id="uploadButton" style="height:45px;">
+              <br>
+              <label for="text" class="" id="" style="height:30px;">About Product:</label>
+              <textarea id="detailedDescription"  class="form-control" name="text" rows="2" cols="36" placeholder="About Product"></textarea>
+              <br>
+
+            </div>
+          </div>
+
+              <button  style="width:100px;"class="btn  btn-primary btn-block float-right" id="btn" type="button" onclick="pushData()">Add Item</button>
+
+        </div>
+
+
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+   <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-app.js"></script>
+
+   <!-- TODO: Add SDKs for Firebase products that you want to use
+   https://firebase.google.com/docs/web/setup#available-libraries -->
+   <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-analytics.js"></script>
+
+   <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-firestore.js"></script>
+   <!--storage!-->
+   <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-storage.js"></script>
+
+<script>
+ // Your web app's Firebase configuration
+ var firebaseConfig = {
+   apiKey: "AIzaSyDZE3W_s78o0kSnVEKc-E4_NmG2qHYBC_8",
+   authDomain: "f-2-b-4731b.firebaseapp.com",
+   databaseURL: "https://f-2-b-4731b.firebaseio.com",
+   projectId: "f-2-b-4731b",
+   storageBucket: "f-2-b-4731b.appspot.com",
+   messagingSenderId: "136118267167",
+   appId: "1:136118267167:web:b52c04db39a9f0260c942a",
+   measurementId: "G-M40EJH4SLH"
+ };
+ // Initialize Firebase
+ firebase.initializeApp(firebaseConfig);
+ firebase.analytics();
+
+ var ref = firebase.firestore();
+ var url;
+
+
+ function pushData(){
+
+   console.log("In pushData");
+
+   var data = {
+       name : document.getElementById("name").value,
+       type :  document.getElementById("type").value,
+       unit : document.getElementById("unit").value,
+       noOfItemAvailable : document.getElementById("noOfItemAvailable").value,
+       price :  document.getElementById("price").value,
+       isItemAvailable : document.getElementById("isItemAvailable").value,
+       imageUri : url ,
+       detailedDescription : document.getElementById("detailedDescription").value,
+   }
+
+   ref.collection("Products").doc(data.name)
+       .set(data)
+       .then(function (doc){
+           //console.log("Hyy the Data Added Sucessfully.......\n" +
+           //"With a Document id :" + doc.id);
+           console.log("Success.....");
+           alert("The data added successfully..");
+           location.reload();
+       })
+       .catch(function(error){
+           console.log("Hyy something went wrong " + error);
+       });
+
+}
+
+uploadButton = document.getElementById("uploadButton");
+
+
+uploadButton.addEventListener('change', function(e){
+
+  var file = e.target.files[0];
+
+  var storageRef = firebase.storage().ref('Products/' + file.name)
+  var uploadTask = storageRef.put(file);
+
+  uploadTask.on('state_changed', function(snapshot){
+        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload is ' + progress + '% done');
+          }, function(error) {
+          }, function() {
+              uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                url = downloadURL;
+              console.log('File available at', downloadURL);
+          });
+      });
+    });
+
+</script>
+<!-- Retrieve Data from firebase !-->
+<script>
+        /*const result = document.querySelector("#result");
+
+          let citiesRef = ref.collection("Products");
+          let allCities = citiesRef.get()
+          .then(snapshot => {
+          snapshot.forEach(doc => {
+            var data = doc.data();
+            console.log("price->" + data.imageUri);
+        //  console.log(JSON.stringify(doc.id, '=>', doc.data().type));
+
+          //JSON.parse();
+          });
+          })
+          .catch(err => {
+          console.log('Error getting documents', err);
+          });*/
+
+          //console.log(name);
+
+          firebase.firestore().collection("Products")
+          .where("name","==","<%= name %>")
+          .get()
+          .then((querySnapshot) =>{
+            querySnapshot.forEach((doc) => {
+              
+              let data = doc.data();
+              console.log(data);
+              document.getElementById("name").value = data.name;
+              document.getElementById("type").value = data.type;
+              document.getElementById("unit").value = data.unit;
+              document.getElementById("noOfItemAvailable").value = data.noOfItemAvailable;
+              document.getElementById("price").value = data.price;
+              document.getElementById("isItemAvailable").value = data.isItemAvailable;
+              document.getElementById("detailedDescription").value = data.detailedDescription;
+              //document.getElementById("uploadButton").value = data.imageUri;
+              //$("#uploadButton").attr('src', data.imageUri);
+              url = data.imageUri;
+            })
+          })
+
+
+
+
+</script>
+<!-- preview image !-->
+<script>
+    const uploadButton = document.getElementById("uploadButton");
+    const previewContainer = document.getElementById("image-preview");
+    const previewImage = previewContainer.querySelector(".image-preview__image");
+    const previewDefaultText = previewContainer.querySelector(".image-preview__default-text");
+
+    uploadButton.addEventListener("change", function(){
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+
+        previewDefaultText.style.display = "none";
+        previewImage.style.display = "block";
+
+        reader.addEventListener("load", function(){
+          previewImage.setAttribute("src", this.result);
+      });
+      reader.readAsDataURL(file);
+
+    }else {
+      previewDefaultText.style.display = null;
+      previewImage.style.display = null;
+      previewImage.setAttribute("src", "");
+  }
+
+  });
+
+</script>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+  </body>
+</html>
