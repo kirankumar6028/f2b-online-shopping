@@ -156,7 +156,8 @@
     .get()
     .then(querySnapshot=>{
       id = querySnapshot.data().deliveryBoyCode;
-      let number = id.substring(5);
+      console.log(id);
+      let number = id.substring(5)
       number = Number.parseInt(number);
       number++;
       number = ("0000" + number).slice(-4);
@@ -214,7 +215,7 @@
        
 }
 
-
+//$("#btn").attr("disabled", true);
 async function pushData(){
 
    console.log("In pushData");
